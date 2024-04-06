@@ -1,12 +1,11 @@
 $(document).ready(init);
-
 const HOST = '0.0.0.0';
 const amenityObj = {};
 const stateObj = {};
 const cityObj = {};
 let obj = {};
 
-function init () {
+init () => {
   $('.amenities .popover input').change(function () { obj = amenityObj; checkedObjects.call(this, 1); });
   $('.state_input').change(function () { obj = stateObj; checkedObjects.call(this, 2); });
   $('.city_input').change(function () { obj = cityObj; checkedObjects.call(this, 3); });
@@ -15,7 +14,7 @@ function init () {
   showReviews();
 }
 
-function checkedObjects (nObject) {
+checkedObjects (nObject) => {
   if ($(this).is(':checked')) {
     obj[$(this).attr('data-name')] = $(this).attr('data-id');
   } else if ($(this).is(':not(:checked)')) {
@@ -29,7 +28,7 @@ function checkedObjects (nObject) {
   }
 }
 
-function apiStatus () {
+apiStatus () => {
   const API_URL = `http://${HOST}:5001/api/v1/status/`;
   $.get(API_URL, (data, textStatus) => {
     if (textStatus === 'success' && data.status === 'OK') {
@@ -40,7 +39,7 @@ function apiStatus () {
   });
 }
 
-function searchPlaces () {
+searchPlaces () => {
   const PLACES_URL = `http://${HOST}:5001/api/v1/places_search/`;
   $.ajax({
     url: PLACES_URL,
@@ -82,7 +81,7 @@ function searchPlaces () {
   });
 }
 
-function showReviews (obj) {
+showReviews (obj) => {
   if (obj === undefined) {
     return;
   }
@@ -103,7 +102,7 @@ function showReviews (obj) {
   }
 }
 
-function printReview (review, obj) {
+printReview (review, obj) => {
   const date = new Date(review.created_at);
   const month = date.toLocaleString('en', { month: 'long' });
   const day = dateOrdinal(date.getDate());
