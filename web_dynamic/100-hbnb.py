@@ -8,26 +8,25 @@ from models.place import Place
 from os import environ
 from flask import Flask, render_template
 import uuid
+
 app = Flask(__name__)
-# app.jinja_env.trim_blocks = True
-# app.jinja_env.lstrip_blocks = True
 
 
 @app.teardown_appcontext
 def close_db(error):
-    """ Remove the current SQLAlchemy Session """
+    """remove the current SQLAlchemy"""
     storage.close()
 
 
 @app.route('/100-hbnb', strict_slashes=False)
 def hbnb():
-    """ HBNB is alive! """
+    """ HBNB main function"""
     states = storage.all(State).values()
     states = sorted(states, key=lambda k: k.name)
     st_ct = []
 
-    for state in states:
-        st_ct.append([state, sorted(state.cities, key=lambda k: k.name)])
+    for s in states:
+        st_ct.append([s, sorted(s.cities, key=lambda k: k.name)])
 
     amenities = storage.all(Amenity).values()
     amenities = sorted(amenities, key=lambda k: k.name)
@@ -42,5 +41,5 @@ def hbnb():
 
 
 if __name__ == "__main__":
-    """ Main Function """
+    """if main"""
     app.run(host='0.0.0.0', port=5000)
